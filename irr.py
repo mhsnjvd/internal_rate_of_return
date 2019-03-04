@@ -453,12 +453,22 @@ class Company():
         gbvs = self.get_growth_in_book_values( opening_book_values, lt_growth)
         book_values = self.get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
         roes = self.get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
-        number_of_days = 305
+        number_of_days = self.get_days_remaining_till_year_end()
         residual_incomes = self.get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
         pv_residual_incomes = self.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
         npv = self.get_npv( irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
         r = self.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
-        return r
+
+        data = {
+            'Growth in book values': gbvs,
+            'Book values': book_values,
+            'ROE (RHS)': roes,
+            'Residual income': residual_incomes,
+            'PV residual income (LHS)': pv_residual_incomes
+        }
+        df = pd.DataFrame( data )
+
+        return { 'df': df, 'irr': r}
 
     def get_clean_data(self):
         return self.cleaned_data
