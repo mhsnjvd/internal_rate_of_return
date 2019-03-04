@@ -1,0 +1,86 @@
+Company Symbol,Name,Sector,BVPS,EPS0,EPS1,EPS2,EPS3,EPS4,EPS5,DPS0,DPS1,DPS2,DPS3,DPS4,DPS5,Previous year end,Year end,Price
+ATVI,"Activision Blizzard, Inc.",Communication Services,14.7,2.6,2.2,2.6,2.9,3.3,3.5,0.3,0.4,0.4,0.5,#N/A,#N/A,20171231,20181231,42.1
+GOOGL,Alphabet Inc. Class A,Communication Services,252.6,43.7,46.4,54.3,62.3,74.4,84.3,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,"1,126.6"
+T,AT&T Inc.,Communication Services,26.5,3.5,3.6,3.7,3.7,3.8,3.9,2.0,2.1,2.1,2.1,2.2,2.1,20171231,20181231,31.1
+CBS,CBS Corporation Class B,Communication Services,7.5,5.2,5.7,6.6,7.4,8.5,7.9,0.7,0.8,0.9,0.9,1.5,1.8,20171231,20181231,50.2
+CTL,"CenturyLink, Inc.",Communication Services,18.6,1.2,1.2,1.3,1.3,1.3,1.3,2.2,1.0,1.0,1.0,1.0,1.0,20171231,20181231,13.2
+CHTR,"Charter Communications, Inc. Class A",Communication Services,157.7,5.2,8.0,12.9,18.8,26.6,24.2,0.0,0.0,0.0,0.0,0.0,#N/A,20171231,20181231,344.9
+CMCSA,Comcast Corporation Class A,Communication Services,15.6,2.6,2.7,3.1,3.5,4.1,4.5,0.8,0.8,0.9,1.0,1.1,1.1,20171231,20181231,38.7
+DISCA,"Discovery, Inc. Class A",Communication Services,14.7,2.1,3.6,3.9,4.3,4.9,5.4,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,28.9
+DISH,DISH Network Corporation Class A,Communication Services,18.4,3.0,2.4,1.9,1.5,0.9,0.4,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,32.5
+EA,Electronic Arts Inc.,Communication Services,14.8,4.4,3.9,4.2,4.9,5.9,6.8,0.0,0.0,0.0,0.0,3.7,#N/A,20170331,20180331,95.8
+FB,"Facebook, Inc. Class A",Communication Services,29.2,7.6,7.5,8.8,10.5,11.5,12.7,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,161.5
+IPG,"Interpublic Group of Companies, Inc.",Communication Services,6.3,1.9,1.8,2.0,2.0,2.2,#N/A,0.8,0.9,1.0,1.2,#N/A,#N/A,20171231,20181231,23.0
+NFLX,"Netflix, Inc.",Communication Services,11.6,2.7,4.1,6.6,9.6,12.6,15.5,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,358.1
+NWSA,News Corporation Class A,Communication Services,16.0,0.4,0.4,0.5,0.6,0.4,#N/A,0.2,0.2,0.2,0.2,#N/A,#N/A,20170630,20180630,13.0
+OMC,Omnicom Group Inc,Communication Services,11.0,5.8,5.8,6.1,6.4,7.2,#N/A,2.4,2.6,2.7,3.1,#N/A,#N/A,20171231,20181231,75.7
+TTWO,"Take-Two Interactive Software, Inc.",Communication Services,12.6,3.4,4.8,5.0,5.9,7.2,7.9,0.0,0.0,0.0,0.0,0.0,0.0,20170331,20180331,87.3
+TRIP,"TripAdvisor, Inc.",Communication Services,10.5,1.7,1.9,2.2,2.6,3.1,4.1,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,53.2
+FOXA,"Twenty-First Century Fox, Inc. Class A",Communication Services,10.5,2.0,2.0,2.3,2.6,2.9,2.7,0.4,0.4,0.5,0.5,#N/A,#N/A,20170630,20180630,50.4
+TWTR,"Twitter, Inc.",Communication Services,8.8,0.9,0.9,1.0,1.2,1.2,1.4,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,30.8
+VZ,Verizon Communications Inc.,Communication Services,12.9,4.7,4.7,4.8,4.9,5.1,5.2,2.4,2.4,2.5,2.5,2.6,2.6,20171231,20181231,56.9
+VIAB,Viacom Inc. Class B,Communication Services,18.4,4.1,4.3,4.4,4.6,4.9,5.1,0.8,0.8,0.8,0.8,#N/A,#N/A,20170930,20180930,29.2
+DIS,Walt Disney Company,Communication Services,32.7,7.1,7.0,7.2,7.6,7.7,8.4,1.7,1.8,1.9,1.9,2.0,2.1,20170930,20180929,112.8
+AAP,"Advance Auto Parts, Inc.",Consumer Discretionary,48.0,7.1,8.1,9.5,11.1,13.4,15.1,0.2,0.2,0.2,0.2,#N/A,#N/A,20171230,20181229,161.8
+AMZN,"Amazon.com, Inc.",Consumer Discretionary,87.0,20.1,27.2,39.0,54.6,72.7,87.2,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,"1,639.8"
+APTV,Aptiv PLC,Consumer Discretionary,13.1,5.3,5.4,6.1,7.0,8.1,9.0,0.9,0.9,0.9,0.9,1.1,#N/A,20171231,20181231,83.1
+AZO,"AutoZone, Inc.",Consumer Discretionary,-55.4,50.3,61.5,64.1,70.1,80.1,90.9,0.0,0.0,0.0,0.0,#N/A,#N/A,20170826,20180825,939.0
+BBY,"Best Buy Co., Inc.",Consumer Discretionary,11.8,5.3,5.6,5.9,6.2,6.7,7.2,1.8,2.0,2.2,2.4,#N/A,#N/A,20180203,20190202,68.8
+BKNG,Booking Holdings Inc.,Consumer Discretionary,183.6,92.6,101.0,113.7,123.6,127.8,138.9,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,"1,697.0"
+BWA,BorgWarner Inc.,Consumer Discretionary,20.4,4.5,4.3,4.7,5.2,5.8,6.4,0.7,0.7,0.7,0.8,0.8,#N/A,20171231,20181231,40.6
+CPRI,Capri Holdings Limited,Consumer Discretionary,13.0,4.5,5.0,5.0,5.5,6.2,6.6,0.0,0.0,0.0,0.0,0.0,0.0,20170401,20180331,45.6
+KMX,"CarMax, Inc.",Consumer Discretionary,18.0,3.6,4.7,5.1,5.5,#N/A,#N/A,0.0,0.0,0.0,0.0,#N/A,#N/A,20170228,20180228,62.1
+CCL.U,Carnival Corporation,Consumer Discretionary,35.0,4.3,4.8,5.3,6.2,7.1,#N/A,2.0,2.1,2.3,2.6,3.5,#N/A,20171130,20181130,57.8
+CMG,"Chipotle Mexican Grill, Inc.",Consumer Discretionary,51.6,9.1,12.2,15.5,18.1,#N/A,#N/A,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,607.5
+DHI,"D.R. Horton, Inc.",Consumer Discretionary,23.7,3.8,4.0,4.3,4.4,#N/A,#N/A,0.5,0.6,0.6,0.8,#N/A,#N/A,20170930,20180930,38.9
+DRI,"Darden Restaurants, Inc.",Consumer Discretionary,17.6,4.8,5.7,6.3,6.8,#N/A,#N/A,2.5,3.0,3.3,3.5,#N/A,#N/A,20170528,20180527,112.1
+DG,Dollar General Corporation,Consumer Discretionary,22.4,4.5,6.0,6.6,7.3,8.4,9.7,1.0,1.2,1.3,1.4,1.5,#N/A,20170203,20180202,118.5
+DLTR,"Dollar Tree, Inc.",Consumer Discretionary,30.2,4.9,5.4,5.8,6.4,7.1,7.8,0.0,0.0,0.0,0.0,#N/A,#N/A,20170128,20180203,96.3
+EBAY,eBay Inc.,Consumer Discretionary,6.4,2.3,2.7,3.0,3.3,3.3,3.5,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,37.2
+EXPE,"Expedia Group, Inc.",Consumer Discretionary,26.8,5.8,6.9,8.2,9.0,9.4,11.8,1.2,1.3,1.3,1.3,#N/A,#N/A,20171231,20181231,123.3
+FL,"Foot Locker, Inc.",Consumer Discretionary,21.7,4.7,5.0,5.3,5.7,6.1,#N/A,1.4,1.5,1.6,1.6,1.8,#N/A,20170128,20180203,59.5
+F,Ford Motor Company,Consumer Discretionary,9.0,1.3,1.2,1.4,1.7,1.7,#N/A,0.7,0.6,0.6,0.6,0.6,#N/A,20171231,20181231,8.8
+GPS,"Gap, Inc.",Consumer Discretionary,9.2,2.6,2.5,2.6,2.5,#N/A,#N/A,1.0,1.0,1.0,1.1,#N/A,#N/A,20180203,20190202,25.4
+GRMN,Garmin Ltd.,Consumer Discretionary,22.1,3.7,3.7,3.9,4.3,#N/A,#N/A,2.1,2.2,2.3,2.3,#N/A,#N/A,20171230,20181229,84.0
+GM,General Motors Company,Consumer Discretionary,28.2,6.5,6.6,6.8,7.0,7.6,#N/A,1.5,1.5,1.5,1.5,1.5,#N/A,20171231,20181231,39.5
+GPC,Genuine Parts Company,Consumer Discretionary,23.6,5.7,6.0,6.3,#N/A,#N/A,#N/A,2.9,3.1,3.2,#N/A,#N/A,#N/A,20171231,20181231,108.8
+HRB,"H&R Block, Inc.",Consumer Discretionary,1.9,3.0,1.9,2.1,2.4,#N/A,#N/A,1.0,1.0,1.0,1.0,#N/A,#N/A,20170430,20180430,24.2
+HBI,Hanesbrands Inc.,Consumer Discretionary,2.7,1.7,1.8,1.8,2.0,2.1,#N/A,0.6,0.6,0.7,0.7,0.7,#N/A,20171230,20181229,18.6
+HOG,"Harley-Davidson, Inc.",Consumer Discretionary,10.9,3.8,3.5,3.8,4.1,3.8,#N/A,1.5,1.5,1.5,1.7,1.8,#N/A,20171231,20181231,37.1
+HAS,"Hasbro, Inc.",Consumer Discretionary,13.9,3.9,4.3,4.9,5.4,#N/A,#N/A,2.5,2.7,2.9,3.3,#N/A,#N/A,20171231,20181230,84.9
+HLT,Hilton Worldwide Holdings Inc,Consumer Discretionary,1.8,2.8,3.8,4.3,5.0,5.8,6.5,0.6,0.6,0.6,0.8,1.2,1.5,20171231,20181231,83.1
+HD,"Home Depot, Inc.",Consumer Discretionary,-1.6,9.9,10.1,11.0,11.9,12.8,13.7,4.1,5.4,5.8,6.3,6.7,7.2,20180128,20190203,185.1
+KSS,Kohl's Corporation,Consumer Discretionary,32.3,4.2,5.6,5.8,5.9,#N/A,#N/A,2.2,2.4,2.7,3.0,#N/A,#N/A,20170128,20180203,67.5
+LB,"L Brands, Inc.",Consumer Discretionary,-3.1,2.8,2.4,2.6,2.8,2.9,4.0,2.4,1.2,1.2,1.2,1.4,1.2,20180203,20190202,26.1
+LEG,"Leggett & Platt, Incorporated",Consumer Discretionary,13.7,2.5,2.6,2.8,3.0,3.2,3.5,1.5,1.5,1.6,1.7,1.8,0.5,20171231,20181231,45.4
+LEN,Lennar Corporation Class A,Consumer Discretionary,47.3,5.4,5.9,6.3,6.6,#N/A,#N/A,0.2,0.2,0.2,0.2,#N/A,#N/A,20171130,20181130,48.0
+LKQ,LKQ Corporation,Consumer Discretionary,15.3,2.2,2.4,2.7,2.8,3.0,3.3,#N/A,#N/A,#N/A,#N/A,#N/A,#N/A,20171231,20181231,27.7
+LOW,"Lowe's Companies, Inc.",Consumer Discretionary,4.5,5.1,6.1,7.0,8.0,8.6,9.2,1.8,2.1,2.2,2.6,2.8,2.6,20180202,20190201,105.1
+M,Macy's Inc,Consumer Discretionary,20.7,4.2,3.2,3.1,2.9,#N/A,#N/A,1.5,1.5,1.5,1.5,#N/A,#N/A,20180203,20190202,24.8
+MAR,"Marriott International, Inc. Class A",Consumer Discretionary,5.9,6.2,6.3,7.1,8.3,9.9,#N/A,1.6,1.7,1.7,1.8,#N/A,#N/A,20171231,20181231,125.3
+MAT,"Mattel, Inc.",Consumer Discretionary,1.9,-1.1,-0.2,0.1,0.4,#N/A,#N/A,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,14.4
+MCD,McDonald's Corporation,Consumer Discretionary,-8.5,7.9,8.1,8.8,9.3,5.1,#N/A,4.2,4.7,5.0,5.2,#N/A,#N/A,20171231,20181231,183.8
+MGM,MGM Resorts International,Consumer Discretionary,12.1,1.0,1.3,1.8,2.0,2.3,2.8,0.5,0.5,0.5,0.6,0.8,0.9,20171231,20181231,26.8
+MHK,"Mohawk Industries, Inc.",Consumer Discretionary,99.5,12.3,11.3,12.4,14.0,14.7,14.9,0.0,0.0,0.0,#N/A,#N/A,#N/A,20171231,20181231,136.1
+NWL,Newell Brands Inc,Consumer Discretionary,11.7,2.7,1.6,1.4,1.6,#N/A,#N/A,0.9,0.9,0.9,1.0,#N/A,#N/A,20171231,20181231,16.2
+NKE,"NIKE, Inc. Class B",Consumer Discretionary,5.9,2.4,2.6,3.1,3.7,4.3,5.1,0.8,0.9,0.9,1.0,1.3,1.5,20170531,20180531,85.7
+JWN,"Nordstrom, Inc.",Consumer Discretionary,5.2,3.6,3.8,4.0,4.3,#N/A,#N/A,1.5,1.6,1.5,1.7,#N/A,#N/A,20180203,20190202,47.3
+NCLH,Norwegian Cruise Line Holdings Ltd.,Consumer Discretionary,26.7,4.9,5.3,5.9,6.3,7.4,#N/A,0.0,0.1,0.5,0.4,#N/A,#N/A,20171231,20181231,55.5
+ORLY,"O'Reilly Automotive, Inc.",Consumer Discretionary,4.3,16.1,17.8,19.8,22.0,24.6,27.6,0.0,0.0,0.0,0.0,#N/A,#N/A,20171231,20181231,372.0
+PHM,"PulteGroup, Inc.",Consumer Discretionary,16.9,3.6,3.2,3.4,3.5,#N/A,#N/A,0.4,0.4,0.4,0.4,#N/A,#N/A,20171231,20181231,27.0
+PVH,PVH Corp.,Consumer Discretionary,70.4,7.9,9.5,10.3,11.4,12.0,12.6,0.2,0.2,0.2,0.2,0.2,0.2,20170129,20180204,114.8
+RL,Ralph Lauren Corporation Class A,Consumer Discretionary,41.9,6.0,7.0,7.6,8.4,10.7,10.1,2.0,2.5,2.6,2.9,3.3,3.7,20170401,20180331,125.2
+ROST,"Ross Stores, Inc.",Consumer Discretionary,7.9,3.6,4.2,4.5,5.0,6.0,6.9,0.6,0.9,1.0,1.2,1.3,1.5,20170128,20180203,94.8
+RCL,Royal Caribbean Cruises Ltd.,Consumer Discretionary,52.7,8.9,10.0,11.2,12.8,15.6,#N/A,2.5,2.8,2.9,3.2,4.8,#N/A,20171231,20181231,118.5
+SBUX,Starbucks Corporation,Consumer Discretionary,0.9,2.4,2.7,3.0,3.5,3.9,4.3,1.3,1.5,1.7,1.9,2.2,2.4,20171001,20180930,70.3
+TPR,"Tapestry, Inc.",Consumer Discretionary,11.2,2.6,2.6,2.9,3.2,3.1,3.2,1.4,1.4,1.4,1.4,1.7,1.8,20170701,20180630,34.9
+TGT,Target Corporation,Consumer Discretionary,21.3,4.7,5.4,5.6,5.8,6.0,6.2,2.5,2.6,2.7,2.9,4.0,#N/A,20170128,20180203,72.6
+TIF,Tiffany & Co.,Consumer Discretionary,26.0,4.1,4.7,4.9,5.4,5.8,6.8,1.9,2.2,2.3,2.5,2.3,2.5,20170131,20180131,95.0
+TJX,TJX Companies Inc,Consumer Discretionary,4.0,2.5,2.6,2.9,3.2,3.4,4.1,0.8,0.9,1.1,1.2,1.3,1.2,20180203,20190202,51.3
+TSCO,Tractor Supply Company,Consumer Discretionary,12.6,4.3,4.7,5.2,5.9,6.6,7.3,1.2,1.3,1.5,1.2,#N/A,#N/A,20171230,20181229,95.4
+ULTA,Ulta Beauty Inc,Consumer Discretionary,28.6,9.0,10.9,12.7,14.9,16.8,18.9,0.0,0.0,0.0,0.0,#N/A,#N/A,20170128,20180203,312.5
+UAA,"Under Armour, Inc. Class A",Consumer Discretionary,4.5,0.3,0.3,0.5,0.7,0.9,1.1,0.0,0.0,0.0,0.0,0.0,0.0,20171231,20181231,22.6
+VFC,V.F. Corporation,Consumer Discretionary,9.2,3.1,3.8,4.3,4.8,5.5,6.3,1.8,1.9,2.1,2.3,2.7,2.9,20161231,20180331,87.4
+WHR,Whirlpool Corporation,Consumer Discretionary,33.8,15.2,14.6,16.5,17.5,18.0,18.4,4.6,4.8,4.8,#N/A,#N/A,#N/A,20171231,20181231,141.5
+WYNN,"Wynn Resorts, Limited",Consumer Discretionary,18.0,6.5,6.1,7.6,8.4,9.1,#N/A,3.0,3.0,3.0,3.0,4.0,4.4,20171231,20181231,126.5
+YUM,"Yum! Brands, Inc.",Consumer Discretionary,-24.8,3.2,3.8,4.3,4.7,#N/A,#N/A,1.4,1.7,1.8,1.9,#N/A,#N/A,20171231,20181231,94.5
