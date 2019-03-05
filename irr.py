@@ -142,7 +142,8 @@ class Company():
         day_count_fraction = number_of_days / 365.0
         #TODO Some bvps are negative and 1 + froe is also negative
         bvps_now = bvps * ( np.abs(1 + froe) ** day_count_fraction )
-        assert not np.isnan(bvps_now), 'Calculation resulted in nan'
+        if np.isnan(bvps_now):
+            raise ValueError("Calculation of bvps_now resulted in a nan")
         return bvps_now
 
     def get_eps_between_now_and_next_year_end(self, eps1_adjusted, bvps_now, bvps):
@@ -294,6 +295,19 @@ class Company():
 
 
     def get_roll_forward_data(self):
+        """
+        Based on the company data, returns a dictionary which has
+        the roll forward data. Roll forward data forms the main input for the
+        internal rate of return calculation
+
+        The method raises an exception if any computed value results in a nan
+        :return: a dictionary with keys:
+            'opening_book_values': numpy array of length 6
+            'eps_forecasts':       numpy array of length 5
+            'dps_forecasts':       numpy array of length 5
+            'bvps':                a float
+            'eps1_adj':            a float
+        """
         cleaned_data = self.get_clean_data()
         eps_pass_1 = cleaned_data['eps_pass_1']
         eps_pass_2 = cleaned_data['eps_pass_2']
@@ -351,6 +365,20 @@ class Company():
         for i in range(2, len(bvps_list)):
             bvps_list[i] =  bvps_list[i-1] + eps_forecasts[i-1] - dps_forecasts[i-1]
 
+
+        # All data should be free of NaNs, make sure:
+        if np.isnan(bvps_list).any():
+            raise ValueError('NaN encountered in bvps_list')
+        if np.isnan(eps_forecasts).any():
+            raise ValueError('NaN encountered in eps_forecasts')
+        if np.isnan(dps_forecasts).any():
+            raise ValueError('NaN encountered in dps_forecasts')
+        if np.isnan(bvps):
+            raise ValueError('bvps is a NaN')
+        if np.isnan(eps1_adj):
+            raise ValueError('eps1_adj is a NaN')
+
+        # Return the roll forward data as a dictionary
         return {
             'opening_book_values': bvps_list,
             'eps_forecasts':       eps_forecasts,
@@ -369,6 +397,7 @@ class Company():
         for i in range(n, len(growth_in_book_values)):
             growth_in_book_values[i] = (ratio ** (1.0/n_iterations)) * growth_in_book_values[i-1]
 
+        #print(growth_in_book_values)
         return growth_in_book_values
 
     def get_book_values_from_growth_in_book_values(self, growth_in_book_values, opening_book_values):
@@ -378,6 +407,7 @@ class Company():
         for i in range(n+1,len(book_values)):
             book_values[i] = book_values[i-1] * (1 + growth_in_book_values[i-1])
 
+        #print(book_values)
         return book_values
 
     def get_roes(self, irr, bvps, eps1_adj, eps_forecasts, opening_book_values, n_iterations=30):
@@ -389,6 +419,7 @@ class Company():
         for i in range(n, len(roes)):
             roes[i] = (ratio ** (1.0/n_iterations)) * roes[i-1]
 
+        #print(roes)
         return roes
 
     def get_residual_incomes(self, book_values, roes, irr, eps_forecasts, n_days):
@@ -406,6 +437,7 @@ class Company():
         #Adjust the first value:
         residual_incomes[0] = eps_forecasts[0] - ((1 + irr) ** ((365 - n_days) / 365) - 1) * book_values[0]
 
+        #print(residual_incomes)
         return residual_incomes
 
     def get_pvs_of_residual_incomes(self, residual_incomes, irr, n_days):
@@ -419,6 +451,7 @@ class Company():
         periods = np.arange(0,len(residual_incomes))
         factors = 1.0/((1+irr) ** (periods + (365-n_days)/365))
         pvs = factors * residual_incomes
+        #print(pvs)
         return pvs
 
     def get_npv(self, irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values):
@@ -426,6 +459,9 @@ class Company():
         residual_incomes = self.get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
         pv_residual_incomes = self.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
         npv = np.sum(pv_residual_incomes) + opening_book_values[0] - price
+
+        print(f'NPV: {npv}')
+        print(f'irr: {irr}')
         return npv
 
 
@@ -452,12 +488,14 @@ class Company():
         lt_growth = self.get_lt_growth()
         gbvs = self.get_growth_in_book_values( opening_book_values, lt_growth)
         book_values = self.get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
-        roes = self.get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
         number_of_days = self.get_days_remaining_till_year_end()
+        roots_object = self.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
+        irr = roots_object.root
+
+        roes = self.get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
         residual_incomes = self.get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
         pv_residual_incomes = self.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
-        npv = self.get_npv( irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
-        r = self.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
+        npv = self.get_npv(irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
 
         data = {
             'Growth in book values': gbvs,
@@ -468,7 +506,7 @@ class Company():
         }
         df = pd.DataFrame( data )
 
-        return { 'df': df, 'irr': r}
+        return {'df': df, 'irr': irr, 'roots_object': roots_object}
 
     def get_clean_data(self):
         return self.cleaned_data
@@ -600,25 +638,28 @@ if __name__ == "__main__":
         except:
             print(x.name)
             bad = bad + 1
-
+            bc = x
 
     print(good)
     print(bad)
 
+    roll_forward_data = bc.get_roll_forward_data()
+    opening_book_values = roll_forward_data['opening_book_values']
+    eps_forecasts = roll_forward_data['eps_forecasts']
+    dps_forecasts = roll_forward_data['dps_forecasts']
+    bvps = roll_forward_data['bvps']
+    eps1_adj = roll_forward_data['eps1_adj']
+    number_of_days = bc.get_days_remaining_till_year_end()
 
-
-
-
-#     gbvs = get_growth_in_book_values( opening_book_values, lt_growth)
-#     book_values = get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
-#     roes = get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
-#     number_of_days = 305
-#     residual_incomes = get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
-#     pv_residual_incomes = get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
-#     npv = get_npv( irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
-#     r = solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
-#     print(r)
-#     rfd = c2.get_roll_forward_data()
-#     print(rfd)
+    gbvs = bc.get_growth_in_book_values( opening_book_values, lt_growth)
+    book_values = bc.get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
+    roes = bc.get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
+    residual_incomes = bc.get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
+    pv_residual_incomes = bc.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
+    npv = bc.get_npv( irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
+    r = bc.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
+    print(r)
+    rfd = c2.get_roll_forward_data()
+    print(rfd)
 
 
