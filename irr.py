@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import numbers
@@ -54,7 +55,8 @@ class Data():
 
     @staticmethod
     def get_data_frame():
-        file_name = 'data.csv'
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        file_name = os.path.join(BASE_DIR, 'data.csv')
         str = ' '.join(['Reading file', file_name])
         print(str)
         df = pd.read_csv(file_name)
@@ -506,10 +508,26 @@ class Company():
         }
         df = pd.DataFrame( data )
 
-        return {'df': df, 'irr': irr, 'roots_object': roots_object}
+        irr_pct = irr * 100
+        irr_pct_str = '{number:.{digits}f}'.format(number=irr_pct, digits=4) + '%'
+        return {
+                'df': df,
+                'df_json': df.to_json(),
+                'irr': irr,
+                'irr_pct_str': irr_pct_str,
+                'roots_object': roots_object,
+                'company_name': self.get_name(),
+                'ticker':       self.get_ticker(),
+                }
 
     def get_clean_data(self):
         return self.cleaned_data
+
+    def get_name(self):
+        return self.name
+
+    def get_ticker(self):
+        return self.ticker
 
     def __init__(self, data_row, lt_growth=0.04, current_date=date.today()):
         """
