@@ -510,9 +510,12 @@ class Company():
 
         irr_pct = irr * 100
         irr_pct_str = '{number:.{digits}f}'.format(number=irr_pct, digits=4) + '%'
+        float_format = lambda x: '{number:.{digits}f}'.format(number=x, digits=4)
         return {
                 'df': df,
-                'df_json': df.to_json(),
+                'df_json': df.to_json(orient='records'),
+                'df_column_names': list(df.columns),
+                'df_html': df.to_html(float_format=float_format),
                 'irr': irr,
                 'irr_pct_str': irr_pct_str,
                 'roots_object': roots_object,
