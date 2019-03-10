@@ -295,7 +295,6 @@ class Company():
 
         return cleaned_data
 
-
     def get_roll_forward_data(self):
         """
         Based on the company data, returns a dictionary which has
@@ -480,6 +479,11 @@ class Company():
         return internal_rate_of_return
 
     def get_residual_frame(self):
+        """This is the main wrapper which computes the 
+        internal rate of return and prepares the data to 
+        be consumed by the website
+        :return: a python dictionary with various fields
+        """
         roll_forward_data = self.get_roll_forward_data()
         opening_book_values = roll_forward_data['opening_book_values']
         eps_forecasts = roll_forward_data['eps_forecasts']
@@ -512,15 +516,16 @@ class Company():
         irr_pct_str = '{number:.{digits}f}'.format(number=irr_pct, digits=4) + '%'
         float_format = lambda x: '{number:.{digits}f}'.format(number=x, digits=4)
         return {
-                'df': df,
-                'df_json': df.to_json(orient='records'),
-                'df_column_names': list(df.columns),
-                'df_html': df.to_html(float_format=float_format),
-                'irr': irr,
-                'irr_pct_str': irr_pct_str,
-                'roots_object': roots_object,
-                'company_name': self.get_name(),
-                'ticker':       self.get_ticker(),
+                'df':                df,
+                'df_json':           df.to_json(orient='records'),
+                'df_column_names':   list(df.columns),
+                'df_html':           df.to_html(float_format=float_format),
+                'irr':               irr,
+                'irr_pct_str':       irr_pct_str,
+                'roots_object':      roots_object,
+                'company_name':      self.get_name(),
+                'ticker':            self.get_ticker(),
+                'sector':            self.get_sector(),
                 }
 
     def get_clean_data(self):
@@ -532,12 +537,14 @@ class Company():
     def get_ticker(self):
         return self.ticker
 
+    def get_sector(self):
+        return self.sector
+
     def __init__(self, data_row, lt_growth=0.04, current_date=date.today()):
-        """
-        Initialize the company object from a dataframe which
-        has only one row
+        """Initialize the company object from a dataframe which has only one row
+        The dataframe is based on the csv file
         :param data_row:
-        :return nothing, just initialize and clean the data
+        :return nothing, just initialize the object
         """
         assert len(data_row) == 1, 'data of a company must be in a single row'
 
@@ -545,11 +552,15 @@ class Company():
         self.name   = self.get_value('Name',   data_row)
         self.ticker = self.get_value('ticker', data_row)
 
+        # Set the sector of the company
+        self.sector = self.get_value('Sector', data_row)
+
         # Set current date for the company
         self.set_current_date(current_date)
 
         # Set the long term growth rate
         self.set_lt_growth(lt_growth)
+
 
         # Earnings per share data
         self.eps0 = self.get_value('EPS0', data_row)
