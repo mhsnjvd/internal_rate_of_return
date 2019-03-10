@@ -388,13 +388,18 @@ class Company():
             'eps1_adj':            eps1_adj,
         }
 
+    def parse_ratio(self, ratio):
+        if ratio < 0:
+            #print(f'ratio: {ratio} encountered for {self.get_name()} (ticker: {self.get_ticker()}), continuing by taking absolute value')
+            ratio = np.abs(ratio)
+        return ratio
+
     def get_growth_in_book_values(self, opening_book_values, lt_growth, n_iterations=30):
         n = len(opening_book_values) - 1
         growth_in_book_values = np.zeros(n_iterations + n)
         growth_in_book_values[:n] = np.diff(opening_book_values) / opening_book_values[:-1]
         gbv = growth_in_book_values[n-1]
-
-        ratio = lt_growth / gbv
+        ratio = self.parse_ratio(lt_growth / gbv)
         for i in range(n, len(growth_in_book_values)):
             growth_in_book_values[i] = (ratio ** (1.0/n_iterations)) * growth_in_book_values[i-1]
 
@@ -416,7 +421,7 @@ class Company():
         roes = np.zeros(n_iterations + n)
         roes[0] = eps1_adj / bvps
         roes[1:n] = eps_forecasts[1:n] / opening_book_values[1:n]
-        ratio = irr / roes[n-1]
+        ratio = self.parse_ratio(irr / roes[n-1])
         for i in range(n, len(roes)):
             roes[i] = (ratio ** (1.0/n_iterations)) * roes[i-1]
 
@@ -461,8 +466,8 @@ class Company():
         pv_residual_incomes = self.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
         npv = np.sum(pv_residual_incomes) + opening_book_values[0] - price
 
-        print(f'NPV: {npv}')
-        print(f'irr: {irr}')
+        # print(f'NPV: {npv}')
+        # print(f'irr: {irr}')
         return npv
 
 
@@ -477,6 +482,31 @@ class Company():
         # the iterations can fail as f can not be evaluated with zero input
         internal_rate_of_return = root_scalar(f, bracket=[1e-4, 2.0])
         return internal_rate_of_return
+
+    def get_irr(self):
+        """A wrapper to get irr
+        :return: if the root solver succeeds, we get a valid number, otherwise a
+        numpy nan is returned
+        """
+        roll_forward_data = self.get_roll_forward_data()
+        opening_book_values = roll_forward_data['opening_book_values']
+        eps_forecasts = roll_forward_data['eps_forecasts']
+        dps_forecasts = roll_forward_data['dps_forecasts']
+        bvps = roll_forward_data['bvps']
+        eps1_adj = roll_forward_data['eps1_adj']
+        price = self.get_price()
+        lt_growth = self.get_lt_growth()
+        gbvs = self.get_growth_in_book_values( opening_book_values, lt_growth)
+        book_values = self.get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
+        number_of_days = self.get_days_remaining_till_year_end()
+
+        try:
+            roots_object = self.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
+            irr = roots_object.root
+        except:
+            irr = np.nan
+
+        return irr
 
     def get_residual_frame(self):
         """This is the main wrapper which computes the 
@@ -583,7 +613,6 @@ class Company():
         self.bvps  = self.get_value('BVPS', data_row)
 
         # useful dates
-        # [TODO] Confusion here, what exactly is previous year?
         self.previous_year_end_date = self.get_value('Year end', data_row)
         self.next_year_end_date     = self.get_next_year_end_date()
         self.days_elapsed_since_reporting_year_end = self.get_days_elapsed_since_reporting_year_end()
@@ -628,70 +657,83 @@ class IRR():
         df = IRR.data
         return df['Company Symbol'].unique()
 
-    def get_residual_income_analysis(self, ticker, current_date, company_data, lt_growth):
-        company = Company(company_data, current_date, lt_growth)
-        company.solve_irr()
+    def get_all_sectors(self):
+        """Get names of all sectors present in the main dataframe
+        :return: an array with all the uique sector names
+        """
+        df = IRR.data
+        return df['Sector'].unique()
 
-    def analyse_company(self, ticker):
-        company_data = df[ df[COLUMN_NAME_MAP['ticker']] == ticker ]
-        company_df = self.get_residual_income_analysis(ticker, date.today(), company_data, 0.04)
+    def get_tickers_with_valid_roll_forward_data(self):
+        all_tickers = self.get_all_company_tickers()
+        good_tickers = []
+        for tkr in all_tickers:
+            # Make the company object
+            c = self.get_company_object(tkr)
+            # try to get roll forward data
+            try:
+                c.get_roll_forward_data()
+                # success! so add it to the good list
+                good_tickers.append(tkr)
+            except:
+                pass
 
+        return good_tickers
+
+    def get_tickers_and_valid_irrs(self):
+        """Get all tickers which return a valid internal rate or return
+        :return a dictionary with tickers as keys and irrs as values
+        """
+        good_tickers = self.get_tickers_with_valid_roll_forward_data()
+        good_companies = [self.get_company_object(tkr) for tkr in good_tickers]
+        tickers_with_irrs = {x.get_ticker(): x.get_irr() for x in good_companies}
+
+        tickers_with_valid_irrs ={k: v for k, v in tickers_with_irrs.items() if not np.isnan(v)}
+        return tickers_with_valid_irrs
+
+    def get_sector_tickers(self, ticker):
+        """Given a ticker, which belongs to a sector, return all
+        tickers which have the same sector
+        """
+        company_obj = self.get_company_object(ticker)
+        sector = company_obj.get_sector()
+        df = IRR.data
+        df_sector = df[df['Sector'] == sector]
+        sector_tickers = df_sector['Company Symbol'].unique()
+        return sector_tickers
+
+    def get_sector_irrs(self, ticker):
+        """Given a ticker, finds the internal rate of return (irr) of all the tickers with
+        valid irr and which have the same sector as the original ticker and
+        returns the result as a dictionary.
+        :return dictionary with tickers as keys and internal rate of returns as values
+        """
+        sector_tickers = self.get_sector_tickers(ticker)
+        tickers_irrs = self.get_tickers_and_valid_irrs()
+        irr_dict = {tkr: tickers_irrs[tkr] for tkr in sector_tickers if tkr in tickers_irrs.keys()}
+        return irr_dict
 
 def main():
     pass
 
 if __name__ == "__main__":
     irr  = IRR()
-    irr2 = IRR()
-    all_tickers = irr.get_all_company_tickers()
-    all_companies = [irr.get_company_object(x) for x in all_tickers]
-    all_companies[0]
-    [print(x) for x in all_companies]
-    df = irr.data.copy(deep=True)
-    c2 = irr.get_company_object('FB')
-    c = irr.get_company_object('NWSA')
-    l = irr.company_objects
 
-    opening_book_values = np.array([30.44, 37.96, 46.78, 57.27, 70.00, 84.03])
-    eps_forecasts = np.array([7.52, 8.82, 10.50, 12.73, 14.03])
-    irr = 9.34151177372357/100.0
-    bvps = 29.15
-    eps1_adj = 8.82
-    price = 161.5
-    dps_forecasts = 0*eps_forecasts
-    lt_growth = .04
+    c = irr.get_company_object('FB')
+    print(f'IRR for FB = {c.get_irr()}')
 
-    good = 0
-    bad  = 0
-    for x in l:
-        try:
-            x.get_residual_frame()
-            good = good + 1
-        except:
-            print(x.name)
-            bad = bad + 1
-            bc = x
 
-    print(good)
-    print(bad)
+    print('All valid IRRs for Communication Services Sector:')
+    sector_irrs = irr.get_sector_irrs('FB')
+    print(sector_irrs)
 
-    roll_forward_data = bc.get_roll_forward_data()
-    opening_book_values = roll_forward_data['opening_book_values']
-    eps_forecasts = roll_forward_data['eps_forecasts']
-    dps_forecasts = roll_forward_data['dps_forecasts']
-    bvps = roll_forward_data['bvps']
-    eps1_adj = roll_forward_data['eps1_adj']
-    number_of_days = bc.get_days_remaining_till_year_end()
+    print('All valid IRRs for Consumer Discretionary Sector:')
+    sector_irrs = irr.get_sector_irrs('BBY')
+    print(sector_irrs)
 
-    gbvs = bc.get_growth_in_book_values( opening_book_values, lt_growth)
-    book_values = bc.get_book_values_from_growth_in_book_values(gbvs, opening_book_values)
-    roes = bc.get_roes(irr, bvps, eps1_adj, eps_forecasts,  opening_book_values)
-    residual_incomes = bc.get_residual_incomes( book_values, roes, irr, eps_forecasts, number_of_days)
-    pv_residual_incomes = bc.get_pvs_of_residual_incomes(residual_incomes, irr, number_of_days)
-    npv = bc.get_npv( irr, book_values, number_of_days, eps1_adj, price, bvps, eps_forecasts, opening_book_values)
-    r = bc.solve_irr( number_of_days, eps1_adj, price, bvps, eps_forecasts, dps_forecasts, opening_book_values, lt_growth)
-    print(r)
-    rfd = c2.get_roll_forward_data()
-    print(rfd)
+    print('All valid IRRs overall:')
+    tickers_irrs = irr.get_tickers_and_valid_irrs()
+    print(tickers_irrs)
+
 
 
